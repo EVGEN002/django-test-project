@@ -1,3 +1,4 @@
+from django.contrib.admin.decorators import display
 from django.db import models
 
 class Genre(models.Model):
@@ -24,6 +25,10 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def display_genre(self):
+        return ', '.join([ genre.name for genre in self.genre.all()[:3] ])
+    display_genre.short_description = 'Genre'
 
     def get_absolute_url(self):
         return reverse("book-detail", args=[str(self.id)])
